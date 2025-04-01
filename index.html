@@ -1,0 +1,72 @@
+<!-- الصفحة الرئيسية لعرض قائمة الأنمي -->
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الرئيسية - قائمة الأنمي</title>
+    <link rel="stylesheet" href="homepage-styles.css">
+    <script type="module" src="homepage.js"></script>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="logo.png" alt="شعار الموقع">
+        </div>
+        <div class="search-bar">
+            <input type="text" id="search" placeholder="ابحث عن الأنمي...">
+            <button id="search-btn">بحث</button>
+        </div>
+        <button id="side-page-btn">الصفحة الجانبية</button>
+    </header>
+    <main id="anime-list">
+        <!-- سيتم تحميل قائمة الأنمي من Firebase هنا -->
+    </main>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
+        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCYTzkQy64G_xnWKB62f7SrqqMd-O6XL_M",
+            authDomain: "brog-2d8b5.firebaseapp.com",
+            projectId: "brog-2d8b5",
+            storageBucket: "brog-2d8b5.firebasestorage.app",
+            messagingSenderId: "1034188865864",
+            appId: "1:1034188865864:web:b736100dcd9bfd7604b37d",
+            measurementId: "G-34ZSLGWZ6N"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        async function loadAnimeList() {
+            const animeList = document.getElementById("anime-list");
+            const querySnapshot = await getDocs(collection(db, "animeList"));
+            animeList.innerHTML = "";
+            querySnapshot.forEach((doc) => {
+                const anime = doc.data();
+                const animeCard = document.createElement("div");
+                animeCard.classList.add("anime-card");
+                animeCard.innerHTML = `
+                    <img src="${anime.image}" alt="${anime.title}">
+                    <h3>${anime.title}</h3>
+                    <p>${anime.description}</p>
+                `;
+                animeList.appendChild(animeCard);
+            });
+        }
+
+        document.getElementById("search-btn").addEventListener("click", () => {
+            const searchValue = document.getElementById("search").value.toLowerCase();
+            const animeCards = document.querySelectorAll(".anime-card");
+            animeCards.forEach(card => {
+                const title = card.querySelector("h3").textContent.toLowerCase();
+                card.style.display = title.includes(searchValue) ? "block" : "none";
+            });
+        });
+
+        loadAnimeList();
+    </script>
+</body>
+  </html>
+  
