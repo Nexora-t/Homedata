@@ -1,72 +1,456 @@
-<!-- الصفحة الرئيسية لعرض قائمة الأنمي -->
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الرئيسية - قائمة الأنمي</title>
-    <link rel="stylesheet" href="homepage-styles.css">
-    <script type="module" src="homepage.js"></script>
+    <title>مكتبة العلم - خدمات تقنية متكاملة</title>
+    <style>
+        /* CSS */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #6e48aa 0%, #9d50bb 100%);
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #fff;
+            padding: 1rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        nav a {
+            margin: 0 15px;
+            text-decoration: none;
+            color: #6e48aa;
+            font-weight: bold;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        nav a:hover {
+            background-color: #6e48aa;
+            color: white;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 20px;
+        }
+        
+        .services {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .service-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .service-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .service-content {
+            padding: 20px;
+        }
+        
+        .service-content h3 {
+            color: #6e48aa;
+            margin-bottom: 10px;
+        }
+        
+        .service-content p {
+            color: #666;
+            margin-bottom: 15px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: #6e48aa;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+        
+        .btn:hover {
+            background-color: #9d50bb;
+        }
+        
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        /* نموذج الطلب */
+        .request-form {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            max-width: 800px;
+            margin: 2rem auto;
+        }
+        
+        .request-form h2 {
+            color: #6e48aa;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        
+        .form-group textarea {
+            height: 150px;
+        }
+        
+        .submit-btn {
+            background-color: #6e48aa;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+        
+        .submit-btn:hover {
+            background-color: #9d50bb;
+        }
+        
+        /* صفحة الدردشة */
+        .chat-container {
+            display: flex;
+            height: 500px;
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .chat-sidebar {
+            width: 30%;
+            background-color: #f9f9f9;
+            border-right: 1px solid #eee;
+            overflow-y: auto;
+        }
+        
+        .chat-main {
+            width: 70%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .chat-header {
+            padding: 15px;
+            background-color: #6e48aa;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .chat-messages {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+        }
+        
+        .message {
+            margin-bottom: 15px;
+            padding: 10px 15px;
+            border-radius: 20px;
+            max-width: 70%;
+        }
+        
+        .received {
+            background-color: #f1f1f1;
+            align-self: flex-start;
+        }
+        
+        .sent {
+            background-color: #6e48aa;
+            color: white;
+            align-self: flex-end;
+        }
+        
+        .chat-input {
+            display: flex;
+            padding: 10px;
+            border-top: 1px solid #eee;
+        }
+        
+        .chat-input input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            margin-right: 10px;
+        }
+        
+        .chat-input button {
+            background-color: #6e48aa;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
     <header>
-        <div class="logo">
-            <img src="logo.png" alt="شعار الموقع">
-        </div>
-        <div class="search-bar">
-            <input type="text" id="search" placeholder="ابحث عن الأنمي...">
-            <button id="search-btn">بحث</button>
-        </div>
-        <button id="side-page-btn">الصفحة الجانبية</button>
+        <h1>مكتبة العلم</h1>
+        <p>خدمات تقنية متكاملة لجميع احتياجاتك</p>
     </header>
-    <main id="anime-list">
-        <!-- سيتم تحميل قائمة الأنمي من Firebase هنا -->
-    </main>
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
-        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
+    
+    <nav>
+        <a href="#home">الرئيسية</a>
+        <a href="#logo-design">تصميم لوجو</a>
+        <a href="#web-projects">مشاريع الويب</a>
+        <a href="#programming-courses">تعليم البرمجة</a>
+        <a href="#data-extraction">استخراج البيانات</a>
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyCYTzkQy64G_xnWKB62f7SrqqMd-O6XL_M",
-            authDomain: "brog-2d8b5.firebaseapp.com",
-            projectId: "brog-2d8b5",
-            storageBucket: "brog-2d8b5.firebasestorage.app",
-            messagingSenderId: "1034188865864",
-            appId: "1:1034188865864:web:b736100dcd9bfd7604b37d",
-            measurementId: "G-34ZSLGWZ6N"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-
-        async function loadAnimeList() {
-            const animeList = document.getElementById("anime-list");
-            const querySnapshot = await getDocs(collection(db, "animeList"));
-            animeList.innerHTML = "";
-            querySnapshot.forEach((doc) => {
-                const anime = doc.data();
-                const animeCard = document.createElement("div");
-                animeCard.classList.add("anime-card");
-                animeCard.innerHTML = `
-                    <img src="${anime.image}" alt="${anime.title}">
-                    <h3>${anime.title}</h3>
-                    <p>${anime.description}</p>
-                `;
-                animeList.appendChild(animeCard);
+    </nav>
+    
+    <div class="container">
+        <section id="home">
+            <h2>مرحبًا بكم في مكتبة العلم</h2>
+            <p>نقدم لكم مجموعة متكاملة من الخدمات التقنية التي تلبي جميع احتياجاتكم في عالم التكنولوجيا والبرمجة.</p>
+            
+            <div class="services">
+                <div class="service-card">
+                    <img src="https://via.placeholder.com/300x200?text=Logo+Design" alt="تصميم لوجو">
+                    <div class="service-content">
+                        <h3>تصميم لوجو</h3>
+                        <p>احصل على تصميم لوجو احترافي يعبر عن هوية علامتك التجارية</p>
+                        <a href="#logo-design" class="btn">اطلب الآن</a>
+                    </div>
+                </div>
+                
+                <div class="service-card">
+                    <img src="https://via.placeholder.com/300x200?text=Web+Projects" alt="مشاريع الويب">
+                    <div class="service-content">
+                        <h3>مشاريع الويب</h3>
+                        <p>بناء وتطوير تطبيقات الويب حسب متطلباتك واحتياجاتك</p>
+                        <a href="#web-projects" class="btn">اطلب الآن</a>
+                    </div>
+                </div>
+                
+                <div class="service-card">
+                    <img src="https://via.placeholder.com/300x200?text=Programming+Courses" alt="تعليم البرمجة">
+                    <div class="service-content">
+                        <h3>تعليم البرمجة</h3>
+                        <p>دورات تعليمية في مختلف لغات البرمجة وتقنيات الويب</p>
+                        <a href="#programming-courses" class="btn">ابدأ التعلم</a>
+                    </div>
+                </div>
+                
+                <div class="service-card">
+                    <img src="https://via.placeholder.com/300x200?text=Data+Extraction" alt="استخراج البيانات">
+                    <div class="service-content">
+                        <h3>استخراج البيانات</h3>
+                        <p>استخراج البيانات من المواقع الإلكترونية لأغراض تعليمية وتحليلية</p>
+                        <a href="#data-extraction" class="btn">اطلب الخدمة</a>
+                    </div>
+                </div>
+                
+                <div class="service-card">
+                    <img src="https://via.placeholder.com/300x200?text=Chat+with+Experts" alt="الدردشة مع المختصين">
+                    <div class="service-content">
+                        <h3>الدردشة مع المختصين</h3>
+                        <p>تواصل مباشر مع المبرمجين والمصممين للحصول على استشارات فورية</p>
+                        <a href="#chat" class="btn">ابدأ الدردشة</a>
+                    </div>
+                </div>
+                
+                <div class="service-card">
+                    <img src="https://via.placeholder.com/300x200?text=Website+Files" alt="استخراج ملفات المواقع">
+                    <div class="service-content">
+                        <h3>استخراج ملفات المواقع</h3>
+                        <p>استخراج ملفات المواقع الإلكترونية لأغراض تعليمية</p>
+                        <a href="#website-files" class="btn">اطلب الخدمة</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+      
+        
+        <section id="data-extraction" class="request-form">
+            <h2>طلب استخراج بيانات</h2>
+          <form id="dataExtractionForm" dir="rtl">
+    <div class="form-group">
+        <label for="clientName">اسمك الكامل:</label>
+        <input type="text" id="clientName" required>
+    </div>
+    
+    <div class="form-group">
+        <label for="clientEmail">بريدك الإلكتروني:</label>
+        <input type="email" id="clientEmail" required>
+    </div>
+    
+    <div class="form-group">
+        <label for="target-website">نوع الخدمة:</label>
+                <input type="text" id="target-website" required>
+    </div>
+    
+    <div class="form-group">
+        <label for="data-required">النص الوصفي للخدمة</label>
+        <textarea id="data-required" required placeholder="مثال: أسماء المنتجات، الأسعار، الأوصاف..."></textarea>
+    </div>
+    
+    <button type="submit" class="submit-btn">إرسال الطلب</button>
+</form>
+        </section>
+        
+        <section id="chat" class="chat-container">
+            <div class="chat-sidebar">
+                <div style="padding: 15px; background-color: #6e48aa; color: white;">
+                    <h3>المختصون المتاحون</h3>
+                </div>
+                <div style="padding: 10px; border-bottom: 1px solid #eee; cursor: pointer;">
+                    <strong>أحمد محمد</strong> - مبرمج ويب
+                </div>
+                <div style="padding: 10px; border-bottom: 1px solid #eee; cursor: pointer;">
+                    <strong>سارة علي</strong> - مصممة جرافيك
+                </div>
+                <div style="padding: 10px; border-bottom: 1px solid #eee; cursor: pointer;">
+                    <strong>خالد عبدالله</strong> - خبير بيانات
+                </div>
+                <div style="padding: 10px; border-bottom: 1px solid #eee; cursor: pointer;">
+                    <strong>نورا أحمد</strong> - مطورة تطبيقات
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <footer>
+        <p>جميع الحقوق محفوظة &copy; مكتبة العلم 2023</p>
+        <p>تواصل معنا: manyegolde1@gmail.com"</p>
+    </footer>
+    <script src="server.js" type="text/javascript" charset="utf-8"></script>
+    <script>
+        // JavaScript
+        document.addEventListener('DOMContentLoaded', function() {
+            // تنقل سلس بين الأقسام
+            document.querySelectorAll('nav a').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 20,
+                        behavior: 'smooth'
+                    });
+                });
             });
-        }
-
-        document.getElementById("search-btn").addEventListener("click", () => {
-            const searchValue = document.getElementById("search").value.toLowerCase();
-            const animeCards = document.querySelectorAll(".anime-card");
-            animeCards.forEach(card => {
-                const title = card.querySelector("h3").textContent.toLowerCase();
-                card.style.display = title.includes(searchValue) ? "block" : "none";
+            
+            // إرسال النماذج
+            document.getElementById('logoForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('تم استلام طلب تصميم اللوجو بنجاح! سنتواصل معك قريبًا.');
+                this.reset();
             });
-        });
-
-        loadAnimeList();
-    </script>
-</body>
-  </html>
-  
+            
+            document.getElementById('webProjectForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('تم استلام طلب مشروع الويب بنجاح! سنراجع المتطلبات ونتواصل معك.');
+                this.reset();
+            });
+            
+            document.getElementById('dataExtractionForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('تم استلام طلب استخراج البيانات بنجاح! سنبدأ العمل عليه قريبًا.');
+                this.reset();
+            });
+            
+            // الدردشة
+            const messageInput = document.getElementById('messageInput');
+            const sendMessageBtn = document.getElementById('sendMessage');
+            const chatMessages = document.getElementById('chatMessages');
+            
+            sendMessageBtn.addEventListener('click', function() {
+                const messageText = messageInput.value.trim();
+                
+                if (messageText) {
+                    // إضافة رسالة المستخدم
+                    const userMessage = document.createElement('div');
+                    userMessage.className = 'message sent';
+                    userMessage.textContent = messageText;
+                    chatMessages.appendChild(userMessage);
+                    
+                    // مسح حقل الإدخال
+                    messageInput.value = '';
+                    
+                    // إضافة رد تلقائي (محاكاة للرد)
+                    setTimeout(() => {
+                        const responses = [
+                            "نعم، يمكنني مساعدتك في ذلك. هل يمكنك توضيح متطلباتك أكثر؟",
+                            "هذا مشروع رائع! ما هي التقنيات التي تفضل استخدامها؟",
+                            "لدي خبرة في هذا النوع من المشاريع. متى تريد البدء؟",
+                            "هل لديك أي تصميمات أو نماذج للمشروع؟"
+                        ];
+                        
+                        const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+                        
+                        const botMessage = document.createElement('div');
+                        botMessage.className = 'message received';
+                        botMessage.textContent = randomResponse;
+                        chatMessages.appendChild(botMessage);
+                        
+                        
+                        
+                        
+                        // التمرير لأسفل لعرض الرسالة الجد
